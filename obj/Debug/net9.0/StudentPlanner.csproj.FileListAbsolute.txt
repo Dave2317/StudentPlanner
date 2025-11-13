@@ -94,3 +94,5 @@ C:\Users\harsh\StudentPlanner\obj\Debug\net9.0\refint\StudentPlanner.dll
 C:\Users\harsh\StudentPlanner\obj\Debug\net9.0\StudentPlanner.pdb
 C:\Users\harsh\StudentPlanner\obj\Debug\net9.0\StudentPlanner.genruntimeconfig.cache
 C:\Users\harsh\StudentPlanner\obj\Debug\net9.0\ref\StudentPlanner.dll
+C:\Users\harsh\StudentPlanner\obj\Debug\net9.0\StudentPlanner.csproj.AssemblyReference.cache
+C:\Users\harsh\StudentPlanner\obj\Debug\net9.0\StudentPlanner.sourcelink.json
