@@ -8,6 +8,113 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/StudentPlanner.styles.css" asp-append-version="true" />
+<style>
+    /* ------------ BASE THEME CLASSES ------------ */
+
+    body.light-mode {
+        background-color: #ffffff;
+        color: #111827;
+    }
+
+    body.dark-mode {
+        background-color: #020617; /* dark navy/black */
+        color: #e5e7eb;
+    }
+
+    /* Apply readable text color to common elements in dark mode */
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3,
+    body.dark-mode h4,
+    body.dark-mode p,
+    body.dark-mode span,
+    body.dark-mode li,
+    body.dark-mode label,
+    body.dark-mode td,
+    body.dark-mode th {
+        color: #e5e7eb !important;
+    }
+
+    /* Links */
+    body.dark-mode a {
+        color: #60a5fa;
+    }
+
+    body.dark-mode a:hover {
+        color: #93c5fd;
+    }
+
+    /* ------------ NAVBAR ------------ */
+
+    body.light-mode .navbar {
+        background-color: #ffffff !important;
+    }
+
+    body.dark-mode .navbar {
+        background-color: #020617 !important;
+        border-bottom: 1px solid #1f2937;
+    }
+
+    /* ------------ MAIN CONTENT AREA ------------ */
+
+    /* The template wraps content in .container */
+    body.dark-mode .container {
+        background-color: #020617;
+    }
+
+    /* Cards (Dashboard, future reports, etc.) */
+    body.light-mode .card {
+        background-color: #ffffff;
+        color: #111827;
+    }
+
+    body.dark-mode .card {
+        background-color: #111827;
+        color: #e5e7eb;
+        border-color: #1f2937;
+    }
+
+    /* ------------ TABLES (Daily Entries) ------------ */
+
+    body.dark-mode table {
+        background-color: #111827;
+        color: #e5e7eb;
+    }
+
+    body.dark-mode th {
+        background-color: #020617;
+        color: #e5e7eb;
+    }
+
+    body.dark-mode td,
+    body.dark-mode th {
+        border-color: #1f2937 !important;
+    }
+
+    /* ------------ BUTTONS ------------ */
+
+    body.dark-mode .btn-primary {
+        background-color: #2563eb;
+        border-color: #2563eb;
+        color: #ffffff;
+    }
+
+    body.dark-mode .btn-primary:hover {
+        background-color: #1d4ed8;
+        border-color: #1d4ed8;
+    }
+
+    body.dark-mode .btn-outline-secondary {
+        color: #e5e7eb;
+        border-color: #4b5563;
+    }
+
+    body.dark-mode .btn-outline-secondary:hover {
+        background-color: #4b5563;
+        color: #ffffff;
+    }
+</style>
+
 </head>
 <body>
     <header>
@@ -33,6 +140,8 @@
                     </li>
                 </ul>
             </div>
+            <button id="themeToggle" class="btn btn=outline-secondary btn-sm ms-2"> 🌙
+`           </button>
         </div>
     </nav>
 </header>
@@ -52,5 +161,37 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+    // Read cookie
+    function getCookie(name) {
+        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) return match[2];
+    }
+
+    // Apply saved theme on page load
+    let savedTheme = getCookie("theme") || "light";
+
+    document.body.classList.add(savedTheme + "-mode");
+
+    if (savedTheme === "dark") {
+        document.getElementById("themeToggle").innerText = "☀️";
+    }
+
+    // Toggle theme
+    document.getElementById("themeToggle").addEventListener("click", function () {
+        let isDark = document.body.classList.contains("dark-mode");
+
+        if (isDark) {
+            document.body.classList.replace("dark-mode", "light-mode");
+            document.cookie = "theme=light; path=/; max-age=31536000";
+            this.innerText = "🌙";
+        } else {
+            document.body.classList.replace("light-mode", "dark-mode");
+            document.cookie = "theme=dark; path=/; max-age=31536000";
+            this.innerText = "☀️";
+        }
+    });
+</script>
+
 </body>
 </html>

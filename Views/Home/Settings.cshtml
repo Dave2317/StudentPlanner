@@ -1,6 +1,79 @@
+@model StudentPlanner.Models.SettingsViewModel
+
 @{
     ViewData["Title"] = "Settings";
 }
 
-<h1>Settings</h1>
-<p>This page will manage our name, theme (cookies), and email options.</p>
+<div class="container mt-4">
+    <h1 class="mb-4">Settings</h1>
+
+    @if (TempData["SettingsMessage"] != null)
+    {
+        <div class="alert alert-info">
+            @TempData["SettingsMessage"]
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.Name))
+    {
+        <p class="mb-3">Welcome back, <strong>@Model.Name</strong>!</p>
+    }
+
+    <div class="row">
+        <!-- Profile / Name -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Profile</h5>
+                    <p class="text-muted">Save your name using cookies.</p>
+
+                    <form asp-action="SaveSettings" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Your Name</label>
+                            <input asp-for="Name" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Name</button>
+                    </form>
+
+                    <form asp-action="ClearSettings" method="post" class="mt-3">
+                        <button type="submit" class="btn btn-outline-danger">Clear Saved Name</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme info -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Theme</h5>
+                    <p class="text-muted">
+                        Current theme:
+                        <strong>@(string.IsNullOrEmpty(Model.CurrentTheme) ? "Not set (default light)" : Model.CurrentTheme)</strong>
+                    </p>
+                    <p class="mb-0">
+                        Use the toggle in the top navigation bar to switch between light and dark mode.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Management section -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Data Management</h5>
+                    <p class="text-muted">
+                        Export your study data (daily entries) as a CSV file for backup or analysis.
+                    </p>
+                    <a asp-action="ExportData" class="btn btn-outline-primary">
+                        Download Daily Entries (.csv)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

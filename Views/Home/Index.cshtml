@@ -1,6 +1,54 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model StudentPlanner.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<h1> Dashboard </h1>
-<p> This page will show our study summary (tasks, hours, completion rate). </p>
+<div class="container mt-4">
+    <h1 class="mb-4">Dashboard</h1>
+    <p class="text-muted mb-4">
+        Track your study summary for the week.
+    </p>
+
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Tasks This Week</h5>
+                    <p class="display-6">@Model.TasksThisWeek</p>
+                    <small class="text-muted">Last 7 days</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Hours Studied</h5>
+                    <p class="display-6">@Model.HoursLast7Days</p>
+                    <small class="text-muted">Last 7 days</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Tasks</h5>
+                    <p class="display-6">@Model.TodayTasks</p>
+                    <small class="text-muted">Entries dated today</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Completion Rate</h5>
+                    <p class="display-6">@Model.CompletionRate.ToString("0")%</p>
+                    <small class="text-muted">Completed / total this week</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
