@@ -7702,11 +7702,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\harsh\\StudentPlanner\\StudentPlanner.csproj",
+      "projectUniqueName": "c:\\Users\\harsh\\StudentPlanner\\StudentPlanner.csproj",
       "projectName": "StudentPlanner",
-      "projectPath": "C:\\Users\\harsh\\StudentPlanner\\StudentPlanner.csproj",
+      "projectPath": "c:\\Users\\harsh\\StudentPlanner\\StudentPlanner.csproj",
       "packagesPath": "C:\\Users\\harsh\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\harsh\\StudentPlanner\\obj\\",
+      "outputPath": "c:\\Users\\harsh\\StudentPlanner\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,59 +1,37 @@
 @model IEnumerable<StudentPlanner.Models.DayEntry>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Daily Entries";
 }
 
-<h1>Index</h1>
+<h1>Daily Entries</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Add New Entry</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Course)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TaskDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hours)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.First().Date)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Course)</th>
+            <th>@Html.DisplayNameFor(model => model.First().TaskDescription)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Hours)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Status)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Notes)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
+            <td>@item.Date.ToShortDateString()</td>
+            <td>@item.Course</td>
+            <td>@item.TaskDescription</td>
+            <td>@item.Hours</td>
+            <td>@item.Status</td>
+            <td>@item.Notes</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
