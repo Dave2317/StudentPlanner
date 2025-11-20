@@ -1,16 +1,19 @@
 @model IEnumerable<StudentPlanner.Models.DayEntry>
-
 @{
     ViewData["Title"] = "Daily Entries";
 }
 
-<h1>Daily Entries</h1>
+<h1 class="page-title">Daily Entries</h1>
+<p class="page-subtitle">Log your study tasks, hours, and status each day.</p>
 
-<p>
+<div class="mb-3">
     <a asp-action="Create" class="btn btn-primary">Add New Entry</a>
-</p>
+</div>
 
-<table class="table">
+<div class="table-responsive table-styled">
+    <table class="table mb-0">
+       
+<table class="table sp-table">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.First().Date)</th>

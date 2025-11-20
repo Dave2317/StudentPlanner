@@ -1,197 +1,155 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    var title = ViewData["Title"] as string ?? "StudentPlanner";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StudentPlanner</title>
-    <script type="importmap"></script>
+    <title>@title - StudentPlanner</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/StudentPlanner.styles.css" asp-append-version="true" />
-<style>
-    /* ------------ BASE THEME CLASSES ------------ */
-
-    body.light-mode {
-        background-color: #ffffff;
-        color: #111827;
-    }
-
-    body.dark-mode {
-        background-color: #020617; /* dark navy/black */
-        color: #e5e7eb;
-    }
-
-    /* Apply readable text color to common elements in dark mode */
-    body.dark-mode h1,
-    body.dark-mode h2,
-    body.dark-mode h3,
-    body.dark-mode h4,
-    body.dark-mode p,
-    body.dark-mode span,
-    body.dark-mode li,
-    body.dark-mode label,
-    body.dark-mode td,
-    body.dark-mode th {
-        color: #e5e7eb !important;
-    }
-
-    /* Links */
-    body.dark-mode a {
-        color: #60a5fa;
-    }
-
-    body.dark-mode a:hover {
-        color: #93c5fd;
-    }
-
-    /* ------------ NAVBAR ------------ */
-
-    body.light-mode .navbar {
-        background-color: #ffffff !important;
-    }
-
-    body.dark-mode .navbar {
-        background-color: #020617 !important;
-        border-bottom: 1px solid #1f2937;
-    }
-
-    /* ------------ MAIN CONTENT AREA ------------ */
-
-    /* The template wraps content in .container */
-    body.dark-mode .container {
-        background-color: #020617;
-    }
-
-    /* Cards (Dashboard, future reports, etc.) */
-    body.light-mode .card {
-        background-color: #ffffff;
-        color: #111827;
-    }
-
-    body.dark-mode .card {
-        background-color: #111827;
-        color: #e5e7eb;
-        border-color: #1f2937;
-    }
-
-    /* ------------ TABLES (Daily Entries) ------------ */
-
-    body.dark-mode table {
-        background-color: #111827;
-        color: #e5e7eb;
-    }
-
-    body.dark-mode th {
-        background-color: #020617;
-        color: #e5e7eb;
-    }
-
-    body.dark-mode td,
-    body.dark-mode th {
-        border-color: #1f2937 !important;
-    }
-
-    /* ------------ BUTTONS ------------ */
-
-    body.dark-mode .btn-primary {
-        background-color: #2563eb;
-        border-color: #2563eb;
-        color: #ffffff;
-    }
-
-    body.dark-mode .btn-primary:hover {
-        background-color: #1d4ed8;
-        border-color: #1d4ed8;
-    }
-
-    body.dark-mode .btn-outline-secondary {
-        color: #e5e7eb;
-        border-color: #4b5563;
-    }
-
-    body.dark-mode .btn-outline-secondary:hover {
-        background-color: #4b5563;
-        color: #ffffff;
-    }
-</style>
-
 </head>
-<body>
+<body data-theme="light">
     <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">StudentPlanner</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="DayEntries" asp-action="Index">Daily Entries</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Reports">Reports</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Settings">Settings</a>
-                    </li>
-                </ul>
-            </div>
-            <button id="themeToggle" class="btn btn=outline-secondary btn-sm ms-2"> 🌙
-`           </button>
-        </div>
-    </nav>
-</header>
+        <nav class="navbar navbar-expand-sm navbar-light app-navbar shadow-sm">
+            <div class="container">
+                <a class="navbar-brand brand-logo d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                    <div class="logo-badge me-2">SP</div>
+                    <div class="d-flex flex-column">
+                        <span class="brand-name">StudentPlanner</span>
+                        <span class="brand-tagline">Plan • Study • Track</span>
+                    </div>
+                </a>
 
-    <div class="container">
-        <main role="main" class="pb-3">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-4 me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link @((title == "Dashboard") ? "active" : "")"
+                               asp-controller="Home" asp-action="Index">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @((title == "Daily Entries") ? "active" : "")"
+                               asp-controller="DayEntries" asp-action="Index">
+                                Daily Entries
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @((title == "Reports") ? "active" : "")"
+                               asp-controller="Home" asp-action="Reports">
+                                Reports
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @((title == "Settings") ? "active" : "")"
+                               asp-controller="Home" asp-action="Settings">
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="small text-muted d-none d-md-inline">Theme</span>
+                        <button id="theme-toggle" class="btn btn-outline-light theme-toggle-btn" type="button"
+                                title="Toggle light / dark">
+                            <span id="theme-icon">🌙</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="app-body">
+        <main role="main" class="container py-4">
             @RenderBody()
         </main>
     </div>
+<footer class="sp-footer">
+    <div class="container">
+        <div class="sp-footer-main">
+            <!-- Brand block -->
+            <div class="sp-footer-brand-block">
+                <div class="sp-footer-logo-circle">SP</div>
+                <div>
+                    <div class="sp-footer-name">StudentPlanner</div>
+                    <div class="sp-footer-tagline">Plan · Study · Track</div>
+                </div>
+            </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - StudentPlanner - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <!-- Info columns (static text, not nav links) -->
+            <div class="sp-footer-columns">
+                <div class="sp-footer-col">
+                    <h6>Product</h6>
+                    <p>Weekly overview</p>
+                    <p>Study reminders</p>
+                    <p>Progress insights</p>
+                </div>
+                <div class="sp-footer-col">
+                    <h6>For Students</h6>
+                    <p>Time blocking</p>
+                    <p>Assignment tracking</p>
+                    <p>Exam preparation</p>
+                </div>
+                <div class="sp-footer-col">
+                    <h6>Support</h6>
+                    <p>Help &amp; tips</p>
+                    <p>Data export (.csv)</p>
+                    <p>Privacy &amp; security</p>
+                </div>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+        <hr class="sp-footer-divider" />
+
+        <div class="sp-footer-bottom">
+            <div class="sp-footer-copy">
+                &copy; @DateTime.Now.Year StudentPlanner. All rights reserved.
+            </div>
+            <div class="sp-footer-social">
+                <span class="sp-footer-social-label">Follow</span>
+                <span class="sp-footer-social-dot">●</span>
+                <span class="sp-footer-social-dot">●</span>
+                <span class="sp-footer-social-dot">●</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
     <script>
-    // Read cookie
-    function getCookie(name) {
-        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-        if (match) return match[2];
-    }
+        // Simple theme toggle using body[data-theme]
+        (function () {
+            const body = document.body;
+            const btn = document.getElementById('theme-toggle');
+            const icon = document.getElementById('theme-icon');
 
-    // Apply saved theme on page load
-    let savedTheme = getCookie("theme") || "light";
+            const savedTheme = localStorage.getItem('sp-theme');
+            if (savedTheme) {
+                body.setAttribute('data-theme', savedTheme);
+                icon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            }
 
-    document.body.classList.add(savedTheme + "-mode");
+            btn?.addEventListener('click', function () {
+                const current = body.getAttribute('data-theme') || 'light';
+                const next = current === 'light' ? 'dark' : 'light';
+                body.setAttribute('data-theme', next);
+                localStorage.setItem('sp-theme', next);
+                icon.textContent = next === 'dark' ? '☀️' : '🌙';
+            });
+        })();
+    </script>
 
-    if (savedTheme === "dark") {
-        document.getElementById("themeToggle").innerText = "☀️";
-    }
-
-    // Toggle theme
-    document.getElementById("themeToggle").addEventListener("click", function () {
-        let isDark = document.body.classList.contains("dark-mode");
-
-        if (isDark) {
-            document.body.classList.replace("dark-mode", "light-mode");
-            document.cookie = "theme=light; path=/; max-age=31536000";
-            this.innerText = "🌙";
-        } else {
-            document.body.classList.replace("light-mode", "dark-mode");
-            document.cookie = "theme=dark; path=/; max-age=31536000";
-            this.innerText = "☀️";
-        }
-    });
-</script>
-
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

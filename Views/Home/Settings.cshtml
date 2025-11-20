@@ -44,20 +44,20 @@
 
         <!-- Theme info -->
         <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Theme</h5>
-                    <p class="text-muted">
-                        Current theme:
-                        <strong>@(string.IsNullOrEmpty(Model.CurrentTheme) ? "Not set (default light)" : Model.CurrentTheme)</strong>
-                    </p>
-                    <p class="mb-0">
-                        Use the toggle in the top navigation bar to switch between light and dark mode.
-                    </p>
-                </div>
-            </div>
+    <div class="card shadow-sm sp-card">
+        <div class="card-body">
+            <h4 class="card-title">Theme</h4>
+            <p>
+                Current theme:
+                <strong>@Model.CurrentTheme</strong>
+            </p>
+            <p class="text-muted">
+                Use the toggle in the top navigation bar to switch between light and dark mode.
+            </p>
         </div>
     </div>
+</div>
+
 
     <!-- Data Management section -->
     <div class="row">
