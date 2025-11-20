@@ -60,6 +60,114 @@ body {
     justify-content: center;
 }
 
+/* ====== Navbar Brand & Layout ====== */
+.app-navbar {
+    background: #0f172a; /* dark navy */
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+}
+.logo-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #22c55e);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.brand-name {
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.1;
+}
+.brand-tagline {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* ====== NAVBAR LINK HOVER EFFECTS ====== */
+.navbar .nav-link {
+    color: #e5e7eb;
+    font-weight: 500;
+    margin-right: 0.35rem;
+    position: relative;
+    transition:
+        color 0.18s,
+        background 0.18s,
+        box-shadow 0.18s;
+    z-index: 1;
+}
+
+/* ACTIVE tab underline and color */
+.navbar .nav-link.active {
+    color: #fff;
+    position: relative;
+}
+.navbar .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.25rem;
+    width: 100%;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2563eb, #22c55e);
+}
+
+/* HOVER/FOCUS animates color, bg and underline */
+.navbar .nav-link:hover:not(.active),
+.navbar .nav-link:focus:not(.active) {
+    color: #2563eb;
+    background: rgba(37,99,235,0.09);
+    box-shadow: 0 2px 18px 0 rgba(37,99,235,.07);
+    border-radius: 8px;
+    text-decoration: none;
+    outline: none;
+}
+.navbar .nav-link:hover:not(.active)::after,
+.navbar .nav-link:focus:not(.active)::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 4px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2563eb, #22c55e);
+    opacity: 0.9;
+}
+
+/* DARK MODE improvements */
+body[data-theme="dark"] .navbar .nav-link {
+    color: #e5e7eb;
+}
+body[data-theme="dark"] .navbar .nav-link.active {
+    color: #fff;
+}
+body[data-theme="dark"] .navbar .nav-link:hover:not(.active),
+body[data-theme="dark"] .navbar .nav-link:focus:not(.active) {
+    color: #60a5fa;
+    background: rgba(96,165,250,0.17);
+    box-shadow: 0 2px 24px 0 rgba(96,165,250,0.07);
+}
+
+/* ====== Theme Toggle Button Styling ====== */
+.theme-toggle-btn {
+    border-color: #475569;
+    color: #e5e7eb;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    transition: background 0.18s, border-color 0.18s;
+}
+.theme-toggle-btn:hover {
+    background: #1f2937;
+    border-color: #64748b;
+}
+
 .brand-name {
     font-weight: 700;
     color: #ffffff;
@@ -81,6 +189,50 @@ body {
 .navbar .nav-link:hover {
     color: #ffffff;
 }
+
+/* General link hover for navbar */
+.navbar .nav-link {
+    position: relative;
+    transition: 
+        color 0.18s,
+        background 0.18s,
+        box-shadow 0.18s;
+    z-index: 1;
+}
+
+.navbar .nav-link:hover:not(.active), 
+.navbar .nav-link:focus:not(.active) {
+    color: #2563eb;          /* Blue accent (or #22c55e for green) */
+    background: rgba(37,99,235,0.09); /* soft blue bg highlight */
+    box-shadow: 0 2px 18px 0 rgba(37, 99, 235, .07);
+    border-radius: 8px;
+    text-decoration: none;
+    outline: none;           /* Remove default focus outline */
+}
+
+/* If you want a soft underline on hover too: */
+.navbar .nav-link:hover:not(.active)::after,
+.navbar .nav-link:focus:not(.active)::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 4px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2563eb, #22c55e);
+    opacity: 0.9;
+    z-index: 2;
+}
+
+/* Dark theme improvements */
+body[data-theme="dark"] .navbar .nav-link:hover:not(.active),
+body[data-theme="dark"] .navbar .nav-link:focus:not(.active) {
+    color: #60a5fa;
+    background: rgba(96,165,250,0.17); /* blue-400/500 overlay for dark */
+    box-shadow: 0 2px 24px 0 rgba(96,165,250,0.07);
+}
+
 
 .navbar .nav-link.active {
     color: #ffffff;
@@ -621,3 +773,47 @@ body.dark-theme .card .text-muted,
 body.dark-theme .card .sp-stat-caption {
     color: #9ca3af;
 }
+
+.stat-card {
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(60, 72, 97, 0.13);
+    border: none;
+    background: #fff;
+    transition: box-shadow 0.18s;
+}
+.stat-card:hover {
+    box-shadow: 0 18px 40px 0 rgba(60, 90, 130, 0.18);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.btn-primary {
+    transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
+}
+.btn-primary:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px 0 rgba(50,100,220,0.1);
+}
+
+.stat-card {
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 32px 0 rgba(60, 72, 97, 0.13);
+    border: none;
+    transition: box-shadow 0.18s, transform 0.16s;
+}
+.stat-card:hover {
+    box-shadow: 0 18px 40px 0 rgba(60, 90, 130, 0.18);
+    transform: translateY(-2px) scale(1.03);
+}
+.table-styled {
+    border-radius: 14px;
+    box-shadow: 0 4px 30px 0 rgba(90,95,120,0.09);
+    overflow: hidden;
+}
+.table-styled tbody tr:nth-child(even) {
+    background: #f7f9fa;
+}
+.table-styled tbody tr:hover {
+    background: #e5f3fe;
+}
+

@@ -6,7 +6,7 @@
 
 <h1>Details</h1>
 
-<div>
+<div class="text-center mt-4">
     <h4>DayEntry</h4>
     <hr />
     <dl class="row">
@@ -48,7 +48,12 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<br></br>
+<br></br>
+<br></br>
+
+<div class="text-center mt-4"> 
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary me-2">Edit</a>
+    <a asp-action="Index" class="btn btn-success">Back to List</a>
 </div>
+
