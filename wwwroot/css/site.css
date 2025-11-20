@@ -398,3 +398,226 @@ body.dark-theme .sp-footer {
         justify-content: flex-start;
     }
 }
+
+/* --- Action Buttons --- */
+.action-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-action {
+    padding: 4px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ffffff;
+    display: inline-block;
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+/* Details – Blue */
+.btn-details {
+    background-color: #0dcaf0; /* Bootstrap info */
+}
+.btn-details:hover {
+    background-color: #0bb5d4;
+}
+
+/* Edit – Yellow */
+.btn-edit {
+    background-color: #ffc107;
+    color: #000;
+}
+.btn-edit:hover {
+    background-color: #e6ac06;
+}
+
+/* Delete – Red */
+.btn-delete {
+    background-color: #dc3545;
+}
+.btn-delete:hover {
+    background-color: #bb2d3b;
+}
+
+/* Dark Mode Compatibility */
+body.dark-mode .btn-edit {
+    color: #000;
+}
+
+body.dark-mode .btn-action {
+    opacity: 0.95;
+}
+body.dark-mode .btn-action:hover {
+    opacity: 1;
+}
+
+
+/* ============================
+   TABLE HOVER EFFECT
+============================ */
+table tbody tr {
+    transition: background-color 0.25s ease;
+}
+
+table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* light blue highlight */
+}
+
+/* Dark mode hover */
+body.dark-mode table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* ============================
+   ACTION BUTTONS
+============================ */
+.action-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-action {
+    padding: 4px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ffffff;
+    display: inline-block;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+/* Slight zoom on hover */
+.btn-action:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== Custom Button Colors ===== */
+
+/* Details – New modern blue */
+.btn-details {
+    background-color: #3b82f6; /* Blue-500 */
+}
+.btn-details:hover {
+    background-color: #2563eb; /* Blue-600 */
+}
+
+/* Edit – New teal/green accent */
+.btn-edit {
+    background-color: #10b981; /* Emerald-500 */
+}
+.btn-edit:hover {
+    background-color: #059669; /* Emerald-600 */
+}
+
+/* Delete – Keep strong danger vibe */
+.btn-delete {
+    background-color: #ef4444; /* Red-500 */
+}
+.btn-delete:hover {
+    background-color: #dc2626; /* Red-600 */
+}
+
+/* ============================
+   DARK MODE BUTTON SUPPORT
+============================ */
+body.dark-mode .btn-action {
+    color: #fff;
+    opacity: 0.92;
+}
+
+body.dark-mode .btn-action:hover {
+    opacity: 1;
+}
+
+/* Extra for Edit button text */
+body.dark-mode .btn-edit {
+    color: #fff;
+}
+
+/* Theme label styling */
+.theme-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-right: 8px;
+    transition: color 0.3s ease;
+}
+
+/* Light mode */
+body.light-mode .theme-label {
+    color: #1c1c1c;   /* Dark grey / good contrast */
+}
+
+/* Dark mode */
+body.dark-mode .theme-label {
+    color: #e5e7eb;   /* Light grey (same as text on dark backgrounds) */
+}
+
+
+/* ========== Theme Label Styling ========== */
+.theme-label-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Base look for both themes */
+.theme-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Light mode */
+.light-theme .theme-label {
+    color: #1a1a1a; /* Dark text */
+}
+
+/* Dark mode */
+.dark-theme .theme-label {
+    color: #e8e8e8; /* Light text */
+}
+
+/* Make the toggle button slightly nicer */
+.theme-toggle-btn {
+    border-radius: 30px;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Adjust border in light mode */
+.light-theme .theme-toggle-btn {
+    border-color: #ccc;
+}
+
+
+/* Dark theme: make dashboard/report/settings cards brighter */
+body.dark-theme .card {
+    background: #111827;              /* slightly lighter than page bg */
+    color: #f9fafb;                   /* main text almost white */
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.2); /* subtle border */
+}
+
+/* Card titles (e.g., "TASKS THIS WEEK", "Email Summary") */
+body.dark-theme .card h5,
+body.dark-theme .card .card-title {
+    color: #e5e7eb;
+}
+
+/* Big numbers on the stat cards: 4, 10, 1, 75% */
+body.dark-theme .card .display-4,
+body.dark-theme .card .display-5,
+body.dark-theme .card .display-6,
+body.dark-theme .sp-stat-number {
+    color: #f9fafb;
+}
+
+/* Small captions under the numbers */
+body.dark-theme .card small,
+body.dark-theme .card .text-muted,
+body.dark-theme .card .sp-stat-caption {
+    color: #9ca3af;
+}

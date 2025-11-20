@@ -57,13 +57,22 @@
                         </li>
                     </ul>
 
-                    <div class="d-flex align-items-center gap-3">
+                    @* <div class="d-flex align-items-center gap-3">
                         <span class="small text-muted d-none d-md-inline">Theme</span>
                         <button id="theme-toggle" class="btn btn-outline-light theme-toggle-btn" type="button"
                                 title="Toggle light / dark">
                             <span id="theme-icon">🌙</span>
                         </button>
-                    </div>
+                    </div> *@
+
+                    <div class="d-flex align-items-center gap-3 theme-label-wrapper">
+    <span class="theme-label">Theme</span>
+    <button id="theme-toggle" class="btn btn-outline-light theme-toggle-btn" type="button"
+            title="Toggle light / dark">
+        <span id="theme-icon">🌙</span>
+    </button>
+</div>
+
                 </div>
             </div>
         </nav>
@@ -126,29 +135,50 @@
 </footer>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    (function () {
+        const body = document.body;
+        const btn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
 
-    <script>
-        // Simple theme toggle using body[data-theme]
-        (function () {
-            const body = document.body;
-            const btn = document.getElementById('theme-toggle');
-            const icon = document.getElementById('theme-icon');
-
-            const savedTheme = localStorage.getItem('sp-theme');
-            if (savedTheme) {
-                body.setAttribute('data-theme', savedTheme);
-                icon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        function updateThemeLabel(mode) {
+            const label = document.getElementById('current-theme-name');
+            if (label) {
+                label.textContent = mode;
             }
+        }
 
-            btn?.addEventListener('click', function () {
-                const current = body.getAttribute('data-theme') || 'light';
-                const next = current === 'light' ? 'dark' : 'light';
-                body.setAttribute('data-theme', next);
-                localStorage.setItem('sp-theme', next);
-                icon.textContent = next === 'dark' ? '☀️' : '🌙';
-            });
-        })();
-    </script>
+        function applyTheme(mode) {
+            // Set data attribute for CSS
+            body.setAttribute('data-theme', mode);
+
+            // Persist for next visits
+            localStorage.setItem('sp-theme', mode);
+
+            // Also store in cookie so the controller can read it
+            document.cookie = "theme=" + mode + "; path=/; max-age=31536000";
+
+            // Update icon
+            icon.textContent = mode === 'dark' ? '☀️' : '🌙';
+
+            // Update Settings page label if present
+            updateThemeLabel(mode);
+        }
+
+        // On load, pick saved theme or default to body attribute / light
+        const savedTheme = localStorage.getItem('sp-theme');
+        const initialTheme = savedTheme || body.getAttribute('data-theme') || 'light';
+        applyTheme(initialTheme);
+
+        // Toggle on click
+        btn?.addEventListener('click', function () {
+            const current = body.getAttribute('data-theme') || 'light';
+            const next = current === 'light' ? 'dark' : 'light';
+            applyTheme(next);
+        });
+    })();
+</script>
+
 
     @RenderSection("Scripts", required: false)
 </body>

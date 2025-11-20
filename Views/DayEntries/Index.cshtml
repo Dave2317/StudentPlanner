@@ -13,7 +13,7 @@
 <div class="table-responsive table-styled">
     <table class="table mb-0">
        
-<table class="table sp-table">
+<table class="table sptable">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.First().Date)</th>
@@ -36,10 +36,12 @@
             <td>@item.Status</td>
             <td>@item.Notes</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+    <div class="action-buttons">
+        <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-details">Details</a>
+        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit">Edit</a>
+        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete">Delete</a>
+    </div>
+</td>
         </tr>
 }
     </tbody>
