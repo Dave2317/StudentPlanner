@@ -57,4 +57,21 @@
     {
         <p>No data yet. Add some daily entries to see your reports.</p>
     }
+
+    <!-- SQLite section -->
+    <h3 class="mt-4 mb-3">Study Tips (from SQLite)</h3>
+
+    @if (Model.StudyTips != null && Model.StudyTips.Any())
+    {
+        <ul class="list-group mb-4">
+            @foreach (var tip in Model.StudyTips)
+            {
+                <li class="list-group-item">@tip</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No tips available from SQLite.</p>
+    }
 </div>

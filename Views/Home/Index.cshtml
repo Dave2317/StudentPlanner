@@ -1,54 +1,88 @@
-﻿@model StudentPlanner.Models.DashboardViewModel
-
-@{
-    ViewData["Title"] = "Dashboard";
-}
+﻿
+@model StudentPlanner.Models.DashboardViewModel
 
 <div class="container mt-4">
+
     <h1 class="mb-4">Dashboard</h1>
-    <p class="text-muted mb-4">
-        Track your study summary for the week.
-    </p>
 
-    <div class="row">
+    <!-- Summary Cards -->
+    <div class="row mb-4">
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Tasks This Week</h5>
-                    <p class="display-6">@Model.TasksThisWeek</p>
-                    <small class="text-muted">Last 7 days</small>
-                </div>
+            <div class="card shadow-sm p-3">
+                <h5>Tasks This Week</h5>
+                <h2>@Model.TasksThisWeek</h2>
             </div>
         </div>
 
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Hours Studied</h5>
-                    <p class="display-6">@Model.HoursLast7Days</p>
-                    <small class="text-muted">Last 7 days</small>
-                </div>
+            <div class="card shadow-sm p-3">
+                <h5>Hours Studied</h5>
+                <h2>@Model.HoursThisWeek</h2>
             </div>
         </div>
 
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Today's Tasks</h5>
-                    <p class="display-6">@Model.TodayTasks</p>
-                    <small class="text-muted">Entries dated today</small>
-                </div>
+            <div class="card shadow-sm p-3">
+                <h5>Today's Tasks</h5>
+                <h2>@Model.TodaysTasks</h2>
             </div>
         </div>
 
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Completion Rate</h5>
-                    <p class="display-6">@Model.CompletionRate.ToString("0")%</p>
-                    <small class="text-muted">Completed / total this week</small>
-                </div>
+            <div class="card shadow-sm p-3">
+                <h5>Completion Rate</h5>
+                <h2>@Model.CompletionRate %</h2>
             </div>
         </div>
+    </div>
+
+    <!-- NEW ROW -->
+    <div class="row mt-4">
+
+        <!-- Left Column: Today's entries table -->
+        <div class="col-md-8">
+            <h3>Today's Entries</h3>
+            @if(!Model.TodayEntries.Any())
+            {
+                <p>No entries added today.</p>
+            }
+            else
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Description</th>
+                            <th>Hours</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var e in Model.TodayEntries)
+                        {
+                            <tr>
+                                <td>@e.Course</td>
+                                <td>@e.TaskDescription</td>
+                                <td>@e.Hours</td>
+                                <td>@e.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+
+        <!-- Right Column: Email summary -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h4>Email Summary</h4>
+                <p>Send your today's study summary to your email.</p>
+
+                <form method="post" action="/Home/EmailTodaySummary">
+                    <button type="submit" class="btn btn-primary w-100">Send Email</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>

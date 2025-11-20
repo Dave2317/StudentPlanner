@@ -4,10 +4,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using StudentPlanner.Models;
+using StudentPlanner.Data;
+using StudentPlanner.Services;
+SQLitePCL.Batteries.Init();
+SQLitePCL.Batteries.Init();
+SQLitePCL.Batteries.Init();
+
+SQLitePCL.Batteries.Init();
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddSingleton<SQLiteService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

@@ -7,5 +7,8 @@ namespace StudentPlanner.Models
         public List<CourseHoursSummary> CourseSummaries { get; set; } = new();
         public int TotalHoursAllTime { get; set; }
         public int EntriesLast7Days { get; set; }
+
+
+        public List<string> StudyTips { get; set; } = new();
     }
 }

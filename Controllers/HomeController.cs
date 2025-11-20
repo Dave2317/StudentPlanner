@@ -5,92 +5,110 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using StudentPlanner.Models;
+using StudentPlanner.Data;
+using StudentPlanner.Services;
+using Microsoft.EntityFrameworkCore;
+
 
 
 namespace StudentPlanner.Controllers
 {
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context;
+   public class HomeController : Controller
+{
+    private readonly ILogger<HomeController> _logger;
+    private readonly AppDbContext _context;
+    private readonly SQLiteService _sqlite;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
+    private readonly EmailService _emailService;
+    
+    public HomeController(ILogger<HomeController> logger, AppDbContext context, SQLiteService sqlite, EmailService emailService)
+    {
+        _logger = logger;
+        _emailService = emailService;
+        _context = context;
+        _sqlite = sqlite;
+    }
 
         // Dashboard
-        public IActionResult Index()
-        {
-            var today = DateTime.Today;
-            var weekStart = today.AddDays(-6); // last 7 days including today
+    public IActionResult Index()
+{
+    var today = DateTime.Today;
+    var weekStart = today.AddDays(-6);
 
-            var tasksThisWeek = _context.DayEntries
-                .Count(e => e.Date >= weekStart && e.Date <= today);
+    var tasksThisWeek = _context.DayEntries
+        .Count(e => e.Date >= weekStart && e.Date <= today);
 
-            var hoursLast7Days = (int)Math.Round(
-                _context.DayEntries
-                    .Where(e => e.Date >= weekStart && e.Date <= today)
-                    .Sum(e => e.Hours)
-            );
+    var hoursLast7Days = (int)Math.Round(
+        _context.DayEntries
+            .Where(e => e.Date >= weekStart && e.Date <= today)
+            .Sum(e => e.Hours)
+    );
 
-            var todayTasks = _context.DayEntries
-                .Count(e => e.Date == today);
+    var todayTasks = _context.DayEntries
+        .Count(e => e.Date == today);
 
-            var completedThisWeek = _context.DayEntries
-                .Count(e => e.Date >= weekStart && e.Date <= today && e.Status == "Completed");
+    var completedThisWeek = _context.DayEntries
+        .Count(e => e.Date >= weekStart && e.Date <= today && e.Status == "Completed");
 
-            double completionRate = 0;
-            if (tasksThisWeek > 0)
-            {
-                completionRate = (double)completedThisWeek / tasksThisWeek * 100.0;
-            }
+    double completionRate = 0;
+    if (tasksThisWeek > 0)
+    {
+        completionRate = (double)completedThisWeek / tasksThisWeek * 100.0;
+    }
 
-            var model = new DashboardViewModel
-            {
-                TasksThisWeek = tasksThisWeek,
-                HoursLast7Days = hoursLast7Days,
-                TodayTasks = todayTasks,
-                CompletionRate = completionRate
-            };
+    var todaysEntriesList = _context.DayEntries
+        .Where(e => e.Date == today)
+        .ToList();
 
-            return View(model);
-        }
+    var model = new DashboardViewModel
+    {
+        TasksThisWeek = tasksThisWeek,
+        HoursLast7Days = hoursLast7Days,
+        TodayTasks = todayTasks,
+        CompletionRate = completionRate,
+        TodayEntries = todaysEntriesList
+    };
+
+    return View(model);
+}
+
 
         // Reports page
-        public IActionResult Reports()
+       public IActionResult Reports()
+{
+    var today = DateTime.Today;
+    var weekStart = today.AddDays(-6);
+
+    var courseSummaries = _context.DayEntries
+        .GroupBy(e => e.Course)
+        .Select(g => new CourseHoursSummary
         {
-            var today = DateTime.Today;
-            var weekStart = today.AddDays(-6);
+            Course = g.Key,
+            TotalHours = (int)Math.Round(g.Sum(x => x.Hours)),
+            EntryCount = g.Count()
+        })
+        .OrderByDescending(x => x.TotalHours)
+        .ToList();
 
-            var courseSummaries = _context.DayEntries
-                .GroupBy(e => e.Course)
-                .Select(g => new CourseHoursSummary
-                {
-                    Course = g.Key,
-                    TotalHours = (int)Math.Round(g.Sum(x => x.Hours)),
-                    EntryCount = g.Count()
-                })
-                .OrderByDescending(x => x.TotalHours)
-                .ToList();
+    var totalHoursAllTime = _context.DayEntries.Any()
+        ? (int)Math.Round(_context.DayEntries.Sum(e => e.Hours))
+        : 0;
 
-            var totalHoursAllTime = _context.DayEntries.Any()
-                ? (int)Math.Round(_context.DayEntries.Sum(e => e.Hours))
-                : 0;
+    var entriesLast7Days = _context.DayEntries
+        .Count(e => e.Date >= weekStart && e.Date <= today);
 
-            var entriesLast7Days = _context.DayEntries
-                .Count(e => e.Date >= weekStart && e.Date <= today);
+    var tips = _sqlite.GetStudyTips();
 
-            var model = new ReportsViewModel
-            {
-                CourseSummaries = courseSummaries,
-                TotalHoursAllTime = totalHoursAllTime,
-                EntriesLast7Days = entriesLast7Days
-            };
+    var model = new ReportsViewModel
+    {
+        CourseSummaries = courseSummaries,
+        TotalHoursAllTime = totalHoursAllTime,
+        EntriesLast7Days = entriesLast7Days,
+        StudyTips = tips
+    };
 
-            return View(model);
-        }
+    return View(model);
+}
 
         // GET: Settings page
         [HttpGet]
@@ -167,6 +185,41 @@ namespace StudentPlanner.Controllers
             TempData["SettingsMessage"] = "Saved name has been cleared.";
             return RedirectToAction("Settings");
         }
+
+     
+    [HttpPost]
+    public async Task<IActionResult> EmailTodaySummary()
+    {
+        var today = DateTime.Today;
+
+        var todaysEntries = await _context.DayEntries
+            .Where(x => x.Date == today)
+            .ToListAsync();
+
+        if (!todaysEntries.Any())
+        {
+            TempData["DashboardMessage"] = "No entries for today.";
+            return RedirectToAction("Index");
+        }
+
+        string emailBody = "<h2>Today's Study Summary</h2>";
+
+        foreach (var e in todaysEntries)
+        {
+            emailBody += $"<p><b>{e.Course}</b>: {e.TaskDescription} ({e.Hours} hours) - {e.Status}</p>";
+        }
+
+        await _emailService.SendEmailAsync(
+            "harshildaveprojects@gmail.com",
+            "Today's Study Summary",
+            emailBody
+        );
+
+        TempData["DashboardMessage"] = "Today's summary has been emailed!";
+        return RedirectToAction("Index");
+    }
+
+
 
         public IActionResult Privacy()
         {
